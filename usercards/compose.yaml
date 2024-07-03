@@ -1,0 +1,18 @@
+services:
+  frontend:
+    image: frontend
+    container_name: frontend
+    restart: unless-stopped
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    networks:
+      - netatmo
+    volumes:
+      - ./frontend:/frontend
+    ports:
+      - 3000:3000
+
+networks:
+  netatmo:
+    driver: bridge
