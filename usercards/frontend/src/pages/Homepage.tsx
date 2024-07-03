@@ -17,6 +17,7 @@ const HomePage = () => {
   const sortType = (searchParams.get("sortType") as SortType) || "";
   const ascending = searchParams.get("ascending") === "true";
 
+  // Recuperation des utilisateurs depuis l'API
   const fetchProfile = async () => {
     try {
       const response = await axios.get("https://randomuser.me/api/?results=10");
@@ -29,6 +30,15 @@ const HomePage = () => {
     }
   };
 
+  const handleFetchProfile = async () => {
+    const data = await fetchProfile();
+    if (data) {
+      setUsers(data.results);
+      localStorage.setItem("users", JSON.stringify(data.results));
+    }
+  };
+
+  // Fonction de tri
   const handleSort = (
     sortingMode: SortType,
     sortedAscending: boolean = true
@@ -58,16 +68,11 @@ const HomePage = () => {
     }
   };
 
-  const handleFetchProfile = async () => {
-    const data = await fetchProfile();
-    console.log("DATA", data.results);
-    if (data) {
-      setUsers(data.results);
-      localStorage.setItem("users", JSON.stringify(data.results));
-    }
-    console.log("USERS", filteredUsers);
-  };
+  useEffect(() => {
+    handleSort(sortType, ascending);
+  }, [sortType, ascending, users]);
 
+  // Recuperation des utilisateurs depuis le localStorage
   useEffect(() => {
     const storedUsers = localStorage.getItem("users");
     if (storedUsers) {
@@ -78,10 +83,6 @@ const HomePage = () => {
       handleFetchProfile();
     } // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-
-  useEffect(() => {
-    handleSort(sortType, ascending);
-  }, [sortType, ascending, users]);
 
   return (
     <div className="max-w-screen mx-auto p-4">

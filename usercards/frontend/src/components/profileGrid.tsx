@@ -10,6 +10,7 @@ interface ProfileGridProps {
   users: any[];
 }
 
+// Carte de profil
 const ProfileCard = ({ profile }: any) => {
   const notifDate = new Date(profile.dob.date);
   const formattedDate = notifDate.toLocaleDateString(undefined, {
@@ -56,6 +57,7 @@ const ProfileCard = ({ profile }: any) => {
   );
 };
 
+// Grille de profils
 const ProfileGrid = ({ users }: ProfileGridProps) => {
   return (
     <Grid container spacing={2}>

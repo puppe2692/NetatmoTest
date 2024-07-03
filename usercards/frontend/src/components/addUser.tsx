@@ -3,7 +3,8 @@ import axios from "axios";
 import AddIcon from "@mui/icons-material/Add";
 import { IconButton } from "@mui/material";
 
-const AddUser = ({ users, setUsers }: { users: any; setUsers: any }) => {
+const AddUser = ({ setUsers }: { setUsers: any }) => {
+  // Recuperation des utilisateurs depuis l'API
   const fetchAddedProfile = async () => {
     try {
       const response = await axios.get("https://randomuser.me/api/?results=10");
@@ -16,9 +17,9 @@ const AddUser = ({ users, setUsers }: { users: any; setUsers: any }) => {
     }
   };
 
+  // Ajout des nouveaux utilisateurs aux utilisateurs existants
   const handleFetchProfile = async () => {
     const data = await fetchAddedProfile();
-    console.log("AddedDATA", data.results);
     if (data) {
       const storedUsers = localStorage.getItem("users");
       let combinedUsers = data.results;

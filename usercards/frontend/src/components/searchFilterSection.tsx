@@ -37,6 +37,7 @@ const SearchFilterSection = ({
   const sortType = (searchParams.get("sortType") as SortType) || "";
   const open = searchParams.get("open") === "true";
 
+  // Filtrage des utilisateurs
   useEffect(() => {
     setFilteredUsers(
       users.filter((user: any) =>
@@ -47,6 +48,7 @@ const SearchFilterSection = ({
     );
   }, [sortType, ascending, users, setFilteredUsers, genderFilter]);
 
+  // Gestion du filtre de genre
   const handleGenderFilterChange = (event: SelectChangeEvent<string>) => {
     setSearchParams(
       (prevParams) => {
@@ -142,7 +144,7 @@ const SearchFilterSection = ({
       >
         <SwapVertIcon />
       </IconButton>
-      <AddUser users={users} setUsers={setUsers} />
+      <AddUser setUsers={setUsers} />
     </div>
   );
 };
