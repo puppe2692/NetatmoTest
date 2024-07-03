@@ -63,19 +63,25 @@ const HomePage = () => {
     console.log("DATA", data.results);
     if (data) {
       setUsers(data.results);
+      localStorage.setItem("users", JSON.stringify(data.results));
     }
-    handleSort(sortType, ascending);
     console.log("USERS", filteredUsers);
   };
 
   useEffect(() => {
-    handleFetchProfile();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    const storedUsers = localStorage.getItem("users");
+    if (storedUsers) {
+      const parsedUsers = JSON.parse(storedUsers);
+      setUsers(parsedUsers);
+      handleSort(sortType, ascending);
+    } else {
+      handleFetchProfile();
+    } // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
     handleSort(sortType, ascending);
-  }, [sortType, ascending]);
+  }, [sortType, ascending, users]);
 
   return (
     <div className="max-w-screen mx-auto p-4">
@@ -83,7 +89,6 @@ const HomePage = () => {
         users={users}
         setUsers={setUsers}
         setFilteredUsers={setFilteredUsers}
-        sortUsers={handleSort}
       />
       <ProfileGrid users={filteredUsers} />
     </div>

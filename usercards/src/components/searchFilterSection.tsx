@@ -14,17 +14,16 @@ import {
 import SwapVertIcon from "@mui/icons-material/SwapVert";
 import { useSearchParams } from "react-router-dom";
 import { SortType } from "../pages/Homepage";
+import AddUser from "./addUser";
 
 const SearchFilterSection = ({
   users,
   setUsers,
   setFilteredUsers,
-  sortUsers,
 }: {
   users: any;
   setUsers: any;
   setFilteredUsers: any;
-  sortUsers: (sortingMode: SortType, sortedAscending: boolean) => void;
 }) => {
   const [searchParams, setSearchParams] = useSearchParams({
     sortType: "",
@@ -143,6 +142,7 @@ const SearchFilterSection = ({
       >
         <SwapVertIcon />
       </IconButton>
+      <AddUser users={users} setUsers={setUsers} />
     </div>
   );
 };
